@@ -1,0 +1,17 @@
+
+# Folders #
+.idea/
+out/
+
+
+# Files #
+*.iml
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
