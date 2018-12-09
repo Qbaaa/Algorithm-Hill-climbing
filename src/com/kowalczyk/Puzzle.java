@@ -71,10 +71,8 @@ class Puzzle {
                 }
 
                 temp.remove(remove);
-
             }
         }
-
     }
 
 
@@ -93,7 +91,7 @@ class Puzzle {
         boolean looprun = true;
 
         System.out.print("Start 8-puzzle:\n" + start);
-        System.out.println("Manhattan distance: " + distance.distance);
+        System.out.println("Suma odległości na Manhattanie dla danej planyszy: " + distance.distance);
 
         do
             {
@@ -101,13 +99,17 @@ class Puzzle {
                 String run = "start";
 
                 candidates.put("calcUp", start.calcUp(start,goal));
-                System.out.print("\n\nKoszt przesunięcia w górę: " + start.calcUp(start,goal));
+                System.out.print("\n\nKoszt przesunięcia w górę: ");
+                writingRunWithManhattan(start.calcUp(start,goal));
                 candidates.put("calcDown", start.calcDown(start,goal));
-                System.out.print(" ;w dół: " + start.calcDown(start,goal));
+                System.out.print(" ;w dół: ");
+                writingRunWithManhattan(start.calcDown(start,goal));
                 candidates.put("calcLeft", start.calcLeft(start,goal));
-                System.out.print(" ;w lewo: " + start.calcLeft(start,goal));
+                System.out.print(" ;w lewo: ");
+                writingRunWithManhattan(start.calcLeft(start,goal));
                 candidates.put("calcRight", start.calcRight(start,goal));
-                System.out.print(" ;w prawo: " + start.calcRight(start,goal));
+                System.out.print(" ;w prawo: ");
+                writingRunWithManhattan(start.calcRight(start,goal));
 
                 for (int i =0; i < 4; i++)
                 {
@@ -119,6 +121,22 @@ class Puzzle {
                             run = tempRun[i];
                         }
                     }
+                }
+
+                List<String> tempc = new ArrayList<>();
+
+                for (int i =0; i < 4; i++)
+                {
+                    if(candidates.get(tempRun[i]) == min)
+                        tempc.add(tempRun[i]);
+                }
+
+                if (tempc.size() > 1)
+                {
+                    Random generator = new Random();
+                    int random = generator.nextInt(tempc.size());
+
+                    run = tempc.get(random);
                 }
 
                 if(run.equals("start"))
@@ -151,14 +169,13 @@ class Puzzle {
 
                     ManhattanDistance d = new ManhattanDistance();
                     d.calculationDistanceManhattan(start, goal);
-                    System.out.println("Manhattan distance: " + d.distance);
+                    System.out.println("Suma odległości na Manhattanie dla danej planyszy: " + d.distance);
 
                     if (d.distance == 0)
                     {
                         System.out.println("\nAlgorytm Hill-climbing rozwiazał problem 8-puzzle.");
                         looprun = false;
                     }
-
 
                 }
 
@@ -275,6 +292,14 @@ class Puzzle {
          else
             return false;
 
+    }
+
+    public void writingRunWithManhattan(int md)
+    {
+        if(md == -1)
+            System.out.print("NIEMOŻLIWY");
+        else
+            System.out.print(md);
     }
 
     @Override
